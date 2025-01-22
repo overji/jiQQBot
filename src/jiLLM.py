@@ -1,5 +1,5 @@
 from json import JSONDecodeError
-from log import log_info
+from .log import log_info
 
 import requests
 import json
