@@ -5,3 +5,5 @@ secret/config.yaml
 test.py
 testPic.jpg
 .idea/
+src/__pycache__/
+messages/__pycache__/
