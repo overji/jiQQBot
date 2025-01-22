@@ -1,0 +1,7 @@
+botpy.log
+.venv/
+secret
+secret/config.yaml
+test.py
+testPic.jpg
+.idea/
