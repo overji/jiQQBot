@@ -1,16 +1,9 @@
-<<<<<<< HEAD
 botpy.log
 .venv/
 secret
 secret/config.yaml
 test.py
 testPic.jpg
-=======
-botpy.log
-.venv/
-secret
-secret/config.yaml
-test.py
-testPic.jpg
->>>>>>> main
 .idea/
+src/__pycache__/
+messages/__pycache__/
