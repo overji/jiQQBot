@@ -18,7 +18,7 @@ from botpy import logging, BotAPI
 from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, Message
 from .jiLLM import jiLLM
-from plugins.dangerous_three_characters import three_characters
+from plugins.dangerous_three_characters import interface_three_characters
 
 config_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret", "config.yaml"))
 test_config = read(config_path)
@@ -55,25 +55,13 @@ class MyClient(botpy.Client):
     def simple_command(self,args):
         cmd = args[0]
         cmd_list = ["邦多利查卡","邦多利","旮旯给木","掷骰子","小锦一言","三字经"]
-        cmd_target = [self.find_bangdream_card, self.random_Bangdream_pic, self.random_galgame_pic, self.roll_dice, self.famous_sentence, self.three_characters]
+        cmd_target = [self.find_bangdream_card, self.random_Bangdream_pic, self.random_galgame_pic, self.roll_dice, self.famous_sentence, interface_three_characters]
         cmd_introduce = ["展示一张邦多利卡片","随机发送邦邦表情包","随机发送旮旯给木表情包","掷一个骰子(随机从1到6)","说一句名言","神秘功能"]
         for i in range(0,len(cmd_list)):
             if(cmd_list[i] == cmd):
                 _log.info(f"{cmd}被找到")
                 return cmd_target[i](args[1:])
         return "找不到指令，请输入.help获取帮助"
-
-    def three_characters(self, args):
-        tw = three_characters()
-        ans = ""
-        word_list = tw.get_specific_word_fast_head(args[0])
-        if not len(word_list) == 0:
-            for i in range(0,25):
-                ans += random.choice(word_list)
-                ans += ' '
-        else:
-            return "请正确输入！三字经要求2~3个字！"
-        return ans
 
     def report_time(self,args):
         nowTime = "现在是 "

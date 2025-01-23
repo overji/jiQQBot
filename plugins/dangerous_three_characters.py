@@ -116,6 +116,18 @@ class three_characters:
             ans.append(choices)
         return ans
 
+def interface_three_characters(args)->str:
+    tw = three_characters()
+    ans = ""
+    word_list = tw.get_specific_word_fast_head(args[0])
+    if not len(word_list) == 0:
+        for i in range(0, 25):
+            ans += random.choice(word_list)
+            ans += ' '
+    else:
+        return "请正确输入！三字经要求2~3个字！"
+    return ans
+
 if __name__ == '__main__':
     tw = three_characters()
     wl = tw.get_specific_word_fast_full("杨振斌",20)
