@@ -19,6 +19,7 @@ def uni_dice(start,end,nums = 1)->list:
 def generate_final_information(ans_list,is_statistic):
     ans = ""
     cnt = 0
+
     if len(ans_list) <= 50:
         ans += f"下面是掷骰子结果:\n"
         for f in ans_list:
@@ -26,8 +27,8 @@ def generate_final_information(ans_list,is_statistic):
     else:
         ans += f"您掷了{len(ans_list)}个骰子，数量过大，因此只会为您展示统计结果\n"
 
-    ans += f"下面是掷骰子的统计结果结果:\n"
     if (is_statistic):
+        ans += f"下面是掷骰子的统计结果结果:\n"
         ans += f"均值:{np.mean(ans_list):.5f}\n"
         ans += f"方差:{np.var(ans_list):.5f}\n"
     return ans
@@ -47,17 +48,17 @@ def interface_roll_dice(args):
     ans_list = []
     is_statistic = False
     try:
-        if(args[-1] == "statis"):
+        if(len(args) != 0 and args[-1] == "statis"):
             is_statistic = True
             args = args[:-1]
-        if(len(args) == 2):
+        if(len(args) == 0):
+            ans_list = uni_dice(start, end)
+        elif(len(args) == 2):
             start = int(args[0])
             end = int(args[1])
             ans_list = uni_dice(start,end)
         elif(len(args) == 1 and args[0] != ""):
             end = int(args[0])
-            ans_list = uni_dice(start,end)
-        elif(len(args) == 0 or args[0] == ""):
             ans_list = uni_dice(start,end)
         else:
             if(args[0] == "poi"):
@@ -87,4 +88,4 @@ def interface_roll_dice(args):
     return f"掷骰子的结果是:{generate_final_information(ans_list,is_statistic)}"
 
 if __name__ == '__main__':
-    print(interface_roll_dice(["uni","0","10","100","statis"]))
+    print(interface_roll_dice([]))
