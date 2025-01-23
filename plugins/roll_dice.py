@@ -57,6 +57,8 @@ def interface_roll_dice(args):
         elif(len(args) == 1):
             end = int(args[0])
             ans_list = uni_dice(start,end)
+        elif(len(args) == 0):
+            ans_list = uni_dice(start,end)
         else:
             if(args[0] == "poi"):
                 lam = float(args[1])
@@ -85,4 +87,4 @@ def interface_roll_dice(args):
     return f"掷骰子的结果是:{generate_final_information(ans_list,is_statistic)}"
 
 if __name__ == '__main__':
-    print(interface_roll_dice(["norm","1","10","100","statis"]))
+    print(interface_roll_dice(["uni","0","10","100","statis"]))
