@@ -66,7 +66,7 @@ class MyClient(botpy.Client):
     def three_characters(self, args):
         tw = three_characters()
         ans = ""
-        word_list = tw.get_words_from_oneWordHead(args[0])
+        word_list = tw.get_specific_word_fast_head(args[0])
         if not len(word_list) == 0:
             for i in range(0,25):
                 ans += random.choice(word_list)
