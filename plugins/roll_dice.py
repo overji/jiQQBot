@@ -85,7 +85,7 @@ def interface_roll_dice(args):
                 raise Exception("错误的掷骰子!")
     except:
         return f"错误的掷骰子!\n{interface_roll_dice_introduction(args)}"
-    return f"掷骰子的结果是:{generate_final_information(ans_list,is_statistic)}"
+    return generate_final_information(ans_list,is_statistic)
 
 if __name__ == '__main__':
     print(interface_roll_dice([]))
