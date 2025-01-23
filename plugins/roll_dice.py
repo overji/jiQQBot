@@ -26,6 +26,7 @@ def generate_final_information(ans_list,is_statistic):
             ans += f"{f:.5f}\n"
     else:
         ans += f"您掷了{len(ans_list)}个骰子，数量过大，因此只会为您展示统计结果\n"
+        is_statistic = True
 
     if (is_statistic):
         ans += f"下面是掷骰子的统计结果结果:\n"
