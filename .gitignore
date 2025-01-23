@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 botpy.log
 .venv/
 secret
 secret/config.yaml
 test.py
 testPic.jpg
+=======
+botpy.log
+.venv/
+secret
+secret/config.yaml
+test.py
+testPic.jpg
+>>>>>>> main
 .idea/

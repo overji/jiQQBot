@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "rows": [
     {
@@ -29,4 +30,37 @@
       ]
     }
   ]
+=======
+{
+  "rows": [
+    {
+      "buttons": [
+        {
+          "id": 1,
+          "render_data": {
+            "label": "\uD83D\uDC40看看我的",
+            "visited_label": "\uD83D\uDC31看过了"
+          },
+          "action": {
+            "type": 2,
+            "permission": {
+              "type": 1 ,
+              "specify_fole_ids": [
+                "0",
+                "1",
+                "2",
+                "3"
+              ],
+              "data": "今日运势"
+            },
+            "click_limit": 10,
+            "unsupport_tips": "您的QQ版本不支持本操作! ",
+            "data": "data",
+            "at_bot_show_channel_list": true
+          }
+        }
+      ]
+    }
+  ]
+>>>>>>> main
 }
