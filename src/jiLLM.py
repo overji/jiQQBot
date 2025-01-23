@@ -32,7 +32,7 @@ class jiLLM:
         response = requests.post(self.url, headers=self.header, json=data, stream=True)
         returned_message = self.parse_response(response)
         self.messages.append({
-            "role": "system",
+            "role": "assistant",
             "content": returned_message
         })
         self.check_messages()
