@@ -18,7 +18,7 @@ from botpy import logging, BotAPI
 from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, Message
 from .jiLLM import jiLLM
-from ..plugins.dangerous_three_characters import three_characters
+from plugins.dangerous_three_characters import three_characters
 
 config_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret", "config.yaml"))
 test_config = read(config_path)
