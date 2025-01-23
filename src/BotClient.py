@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
-import asyncio
 import os
-import random
 import re
-import datetime
 
 from botpy.types.message import MarkdownPayload, KeyboardPayload
 
-import messages.specificMessage
-from random import randint
 from botpy.manage import GroupManageEvent
-
 from messages.specificMessage import HelloMessage
 from .BotDB import BotDB
 import botpy
@@ -18,7 +12,14 @@ from botpy import logging, BotAPI
 from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, Message
 from .jiLLM import jiLLM
+
 from plugins.dangerous_three_characters import interface_three_characters
+from plugins.report_time import interface_report_time
+from plugins.find_bangdream_card import interface_find_bangdream_card
+from plugins.random_bangdream_emoji import interface_random_bangdream_emoji
+from plugins.random_galgame_emoji import  interface_random_galgame_emoji
+from plugins.roll_dice import interface_roll_dice
+from plugins.famous_sentence import interface_famous_sentence
 
 config_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret", "config.yaml"))
 test_config = read(config_path)
@@ -55,86 +56,13 @@ class MyClient(botpy.Client):
     def simple_command(self,args):
         cmd = args[0]
         cmd_list = ["邦多利查卡","邦多利","旮旯给木","掷骰子","小锦一言","三字经"]
-        cmd_target = [self.find_bangdream_card, self.random_Bangdream_pic, self.random_galgame_pic, self.roll_dice, self.famous_sentence, interface_three_characters]
+        cmd_target = [interface_find_bangdream_card, interface_random_bangdream_emoji, interface_random_galgame_emoji, interface_roll_dice, interface_famous_sentence, interface_three_characters]
         cmd_introduce = ["展示一张邦多利卡片","随机发送邦邦表情包","随机发送旮旯给木表情包","掷一个骰子(随机从1到6)","说一句名言","神秘功能"]
         for i in range(0,len(cmd_list)):
             if(cmd_list[i] == cmd):
                 _log.info(f"{cmd}被找到")
                 return cmd_target[i](args[1:])
         return "找不到指令，请输入.help获取帮助"
-
-    def report_time(self,args):
-        nowTime = "现在是 "
-        youbi = datetime.datetime.now().weekday() + 1
-        if(youbi == 1):
-            nowTime += "星期一 "
-        elif(youbi == 2):
-            nowTime += "星期二 "
-        elif(youbi == 3):
-            nowTime += "星期三 "
-        elif(youbi == 4):
-            nowTime += "星期四 "
-        elif(youbi == 5):
-            nowTime += "星期五 "
-        elif(youbi == 6):
-            nowTime += "星期六 "
-        elif(youbi == 7):
-            nowTime += "星期日 "
-
-        nowTime += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        return nowTime
-
-    def random_Bangdream_pic(self,args):
-        picNum = 6#可以在这里修改表情包数量
-        random_Pic = random.randint(1,picNum)
-        file_url = f"http://112.124.43.86/bangDream/{random_Pic}.jpg"
-        return file_url
-
-    def random_galgame_pic(self,args):
-        picNum = 10#可以在这里修改表情包数量
-        random_Pic = random.randint(1,picNum)
-        file_url = f"http://112.124.43.86/gal/{random_Pic}.jpg"
-        return file_url
-
-    def roll_dice(self,args):
-        return f"掷骰子的结果是:{str(random.randint(1,6))}"
-
-    def famous_sentence(self,args):
-        mydb = BotDB()
-        return mydb.get_one_famousWords()
-
-    def find_bangdream_card(self,args):
-        if (not args) or len(args) == 0:
-            picNum = 250  # 可以在这里修改表情包数量
-            random_Pic = random.randint(1, picNum)
-            file_url = f"http://112.124.43.86/bangdream_card/{random_Pic}.png"
-        else:
-            target = int(args[0])
-            if(target > 0 and target <= 2640):
-                file_url = f"http://112.124.43.86/bangdream_card/{target}.png"
-            else:
-                return "邦多利查卡功能介绍\n使用方法: /邦多利查卡 [卡面ID]\n示例: /邦多利查卡 1582\n请确保卡面ID是一个整数，并且这个数字应当大于0并小于2641，否则会返回本消息"
-        return file_url
-
-    async def detect_special_time(self):
-        pass
-        # while(True):
-        #     now = datetime.datetime.now()
-        #     if now.minute == 30:
-        #         _log.info(now.strftime("%H:%M:%S"))
-        #     if now.hour == 7 and now.minute == 0:
-        #         await self.send_subjective_message("早上七点了，该起床了!")
-        #     elif now.hour == 12 and now.minute == 0:
-        #         await self.send_subjective_message("中午十二点了，该吃午饭了!")
-        #     elif now.hour == 17 and now.minute == 34:
-        #         await self.send_subjective_message("下午五点半了，该吃晚饭了!")
-        #     elif now.hour == 23 and now.minute == 30:
-        #         await self.send_subjective_message("晚上十一点半了，该睡觉了!")
-        #     await asyncio.sleep(60)
-
-    async def send_template_keyboard(self,api: BotAPI, groupMessage: GroupMessage):
-        markdown = MarkdownPayload(content="# 123 \n 今天是个好天气")
-        await api.post_group_message(groupMessage.group_openid,msg_type = 2,markdown=markdown)
 
     async def on_group_at_message_create(self, message: GroupMessage):
         _log.info(f"消息在{message.group_openid}")
