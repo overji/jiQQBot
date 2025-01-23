@@ -24,9 +24,6 @@ class three_characters:
     def get_words_from_oneWordHead(self,input):
         #根据汉语词汇的拼音首字母获取所有的汉字组合
         ans = []
-        if (len(input) > 4):
-            return ans
-
         pinyin = []
         word_sum = []
 
@@ -52,9 +49,6 @@ class three_characters:
     def get_words_from_oneWord(self,input):
         #根据汉语词汇的拼音获取所有的汉字组合
         ans = []
-        if (len(input) > 4):
-            return ans
-
         pinyin = []
         word_sum = []
 
@@ -79,9 +73,6 @@ class three_characters:
     def get_specific_word_fast_full(self,input,size = 10):
         #快速获取指定拼音的汉字组合
         ans = []
-        if (len(input) > 4):
-            return ans
-
         pinyin = []
         word_sum = []
 
@@ -105,9 +96,6 @@ class three_characters:
     def get_specific_word_fast_head(self, input, size = 10):
         #快速获取指定拼音首字母的汉字组合
         ans = []
-        if (len(input) > 4):
-            return ans
-
         pinyin = []
         word_sum = []
 
@@ -140,7 +128,7 @@ if __name__ == '__main__':
         if cnt % 10 == 0:
             print()
     print()
-    wl = tw.get_specific_word_fast_head("金雪",20)
+    wl = tw.get_specific_word_fast_head("上海交通大学",20)
     cnt = 0
     for i in range(0, 20):
         word = random.choice(wl)
