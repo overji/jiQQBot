@@ -30,7 +30,6 @@ _log = logging.get_logger()
 class MyClient(botpy.Client):
     #机器人主程序
     async def initial_bot(self,log_massage:str):
-        await self.detect_special_time()
         self.llm = jiLLM()
         _log.info(log_massage)
 
