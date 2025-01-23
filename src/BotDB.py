@@ -5,7 +5,7 @@ import mysql.connector
 from botpy.ext.cog_yaml import read
 from botpy import logging
 
-config_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "secret", "config.yaml"))
+config_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret", "config.yaml"))
 test_config = read(config_path)
 
 # _log = logging.get_logger()

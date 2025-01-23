@@ -4,17 +4,20 @@ import os
 import random
 import re
 import datetime
+
+from botpy.types.message import MarkdownPayload, KeyboardPayload
+
 import messages.specificMessage
 from random import randint
 from botpy.manage import GroupManageEvent
 
 from messages.specificMessage import HelloMessage
-from BotDB import BotDB
+from .BotDB import BotDB
 import botpy
-from botpy import logging
+from botpy import logging, BotAPI
 from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, Message
-from jiLLM import jiLLM
+from .jiLLM import jiLLM
 
 config_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret", "config.yaml"))
 test_config = read(config_path)
@@ -127,6 +130,10 @@ class MyClient(botpy.Client):
         #     elif now.hour == 23 and now.minute == 30:
         #         await self.send_subjective_message("晚上十一点半了，该睡觉了!")
         #     await asyncio.sleep(60)
+
+    async def send_template_keyboard(self,api: BotAPI, groupMessage: GroupMessage):
+        markdown = MarkdownPayload(content="# 123 \n 今天是个好天气")
+        await api.post_group_message(groupMessage.group_openid,msg_type = 2,markdown=markdown)
 
     async def on_group_at_message_create(self, message: GroupMessage):
         _log.info(f"消息在{message.group_openid}")
