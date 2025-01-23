@@ -2,7 +2,7 @@
 import os
 import re
 
-from botpy.types.message import MarkdownPayload, KeyboardPayload
+from botpy.types.message import MarkdownPayload, KeyboardPayload, MessageMarkdownParams
 
 from botpy.manage import GroupManageEvent
 from messages.specificMessage import HelloMessage
@@ -39,6 +39,18 @@ class MyClient(botpy.Client):
     async def on_resumed(self):
         await self.initial_bot(f"robot 「{self.robot.name}」 on_resumed and time detection has started!")
 
+    async def handle_send_markdown_by_template(self, message:GroupMessage):
+        params = [
+            MessageMarkdownParams(key="date", values=["	2025/1/22，星期三，农历腊月廿三"]),
+            MessageMarkdownParams(key="score", values=["95"]),
+            MessageMarkdownParams(key="comment", values=["大吉"]),
+            MessageMarkdownParams(key="sentence", values=["我们最值得自豪的不在于从不跌倒，而在于每次跌倒之后都爬起来。"]),
+            MessageMarkdownParams(key="cardnum", values=["029038"])
+        ]
+        markdown = MarkdownPayload(custom_template_id="102439716_1737512805", params=params)
+        # 通过api发送回复消息
+        await self.api.post_group_message(group_openid=message.group_openid,msg_type=2,msg_id=message.id,markdown=markdown)
+
     def judge_special_message(self,message:str):
         message = message.strip()
         _log.info(message)
@@ -65,6 +77,8 @@ class MyClient(botpy.Client):
 
     async def on_group_at_message_create(self, message: GroupMessage):
         _log.info(f"消息在{message.group_openid}")
+        await self.handle_send_markdown_by_template(message)
+        return
         myInfo = self.judge_special_message(message.content)
         if re.search("^http",myInfo):
             uploadMedia = await message._api.post_group_file(

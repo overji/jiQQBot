@@ -95,7 +95,6 @@ class BotDB:
         return mycursor.fetchone()[0]
 
 
-
-
-db = BotDB()
-print(db.get_one_famousWords())
+if __name__ == '__main__':
+    db = BotDB()
+    print(db.get_one_famousWords())

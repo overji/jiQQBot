@@ -66,7 +66,3 @@ class jiLLM:
                 "content": self.background_prompt
             }
         ]
-
-
-
-
