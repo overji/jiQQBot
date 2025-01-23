@@ -71,6 +71,8 @@ class MyClient(botpy.Client):
             for i in range(0,25):
                 ans += random.choice(word_list)
                 ans += ' '
+        else:
+            return "请正确输入！三字经要求2~3个字！"
         return ans
 
     def report_time(self,args):

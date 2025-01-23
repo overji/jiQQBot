@@ -19,9 +19,10 @@ class three_characters:
         return hanzi_list
 
     def get_words_from_oneWordHead(self,input):
-        if(len(input) > 4):
-            input = input[0:3]
         ans = []
+        if (len(input) > 4):
+            return ans
+
         pinyin = []
         word_sum = []
 
@@ -45,9 +46,10 @@ class three_characters:
         return ans
 
     def get_words_from_oneWord(self,input):
-        if (len(input) > 4):
-            input = input[0:3]
         ans = []
+        if (len(input) > 4):
+            return ans
+
         pinyin = []
         word_sum = []
 
