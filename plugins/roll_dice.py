@@ -54,10 +54,10 @@ def interface_roll_dice(args):
             start = int(args[0])
             end = int(args[1])
             ans_list = uni_dice(start,end)
-        elif(len(args) == 1):
+        elif(len(args) == 1 and args[0] != ""):
             end = int(args[0])
             ans_list = uni_dice(start,end)
-        elif(len(args) == 0):
+        elif(len(args) == 0 or args[0] == ""):
             ans_list = uni_dice(start,end)
         else:
             if(args[0] == "poi"):
