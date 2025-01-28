@@ -49,7 +49,7 @@ class MyClient(botpy.Client):
         ]
         markdown = MarkdownPayload(custom_template_id="102439716_1737512805", params=params)
         # 通过api发送回复消息
-        await self.api.post_group_message(group_openid=message.group_openid,msg_type=2,msg_id=message.id,markdown=markdown)
+        await message._api.post_group_message(group_openid=message.group_openid,msg_type=2,msg_id=message.id,markdown=markdown)
 
     def judge_special_message(self,message:str):
         message = message.strip()
