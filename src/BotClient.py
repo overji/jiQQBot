@@ -62,8 +62,6 @@ class MyClient(botpy.Client):
 
     async def on_group_at_message_create(self, message: GroupMessage):
         _log.info(f"消息在{message.group_openid}")
-        await self.handle_send_markdown_by_template(message)
-        return
         myInfo = self.judge_special_message(message.content)
         if re.search("^http",myInfo):
             uploadMedia = await message._api.post_group_file(
