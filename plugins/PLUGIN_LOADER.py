@@ -19,7 +19,7 @@ def parse_command(args):
     return "找不到指令，请输入.help获取帮助"
 
 def get_all_plugins(cmd_list, cmd_target, cmd_introduce):
-    files = [f for f in os.listdir(".") if os.path.isfile(f)]
+    files = [f for f in os.listdir("./plugins") if os.path.isfile(f)]
     for f in files:
         plugin_name = os.path.splitext(f)[0]
         if(plugin_name != "PLUGIN_LOADER" and plugin_name != "RESTRICTION"):
