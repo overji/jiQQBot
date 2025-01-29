@@ -1,5 +1,12 @@
 from json import JSONDecodeError
 from .log import log_info
+from botpy.ext.cog_yaml import read
+from openai import OpenAI
+import os
+
+
+config_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret", "config.yaml")
+test_config = read(config_path)
 
 import requests
 import json
@@ -11,49 +18,36 @@ class jiLLM:
         "在父母的影响下，自幼便对音乐产生了兴趣。"
         "在成为Vtuber前曾作为VOITO P主“miasuP”活动过，在此期间创作了播放量500w以上的名曲《Whitetip》。"
         "因为自身天使般的性格和可爱的外表而被智宏称为“小天使”。"
-        "请你以这样的身份和用户聊天，注意你多轮对话的轮数为10轮，超过10轮后会清空对话记录。"
+        "请你以这样的身份和用户(学长)聊天，注意你多轮对话的轮数为10轮，超过10轮后会清空对话记录。"
         self.messages = [
             {
                 "role": "system",
                 "content": self.background_prompt
             }
         ]
-        self.url = "https://spark-api-open.xf-yun.com/v1/chat/completions"
-        self.header = {
-            "Authorization": "Bearer PUUDZpSeahQkkntuBDRm:TNChTOpFisAnmOiChuvQ"
-        }
+        self.apiKey = test_config["aiSecret"]
+        self.client = OpenAI(api_key=self.apiKey, base_url="https://api.deepseek.com",)
 
     def send_message(self,input_message:str):
         self.messages.append({
             "role": "user",
             "content": input_message
         })
-        data = {"max_tokens": 4096, "top_k": 4, "temperature": 0.5, "messages": self.messages, "model": "4.0Ultra", "stream": True}
-        response = requests.post(self.url, headers=self.header, json=data, stream=True)
-        returned_message = self.parse_response(response)
+        response = self.client.chat.completions.create(
+            model="deepseek-chat",
+            messages=self.messages,
+            stream=False,
+            temperature=1.3
+        )
+        returned_message = response.choices[0].message.content
         self.messages.append({
             "role": "assistant",
             "content": returned_message
         })
         self.check_messages()
-        log_info(f"返回的消息:{returned_message}，发送的消息:{input_message}")
-        return returned_message
+        log_info(f"发送的消息:\"{input_message}\"，返回的消息:\"{returned_message}\"")
 
-    def parse_response(self,response:requests.Response)->str:
-        ans = ""
-        response.encoding = "utf-8"
-        for line in response.iter_lines(decode_unicode="utf-8"):
-            try:
-                lines = json.loads(line[6:].strip())
-            except JSONDecodeError:
-                continue
-            if 'choices' in lines:
-                choice = lines['choices'][0]
-                if 'delta' in choice:
-                    delta = choice['delta']
-                    if 'content' in delta:
-                        ans += delta['content']
-        return ans
+        return returned_message
 
     def check_messages(self):
         if(len(self.messages) > 10):
@@ -68,5 +62,6 @@ class jiLLM:
         ]
 
 
-
-
+if __name__ == '__main__':
+    llm = jiLLM()
+    print(llm.send_message("你好"))

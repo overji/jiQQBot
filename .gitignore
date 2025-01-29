@@ -7,3 +7,4 @@ testPic.jpg
 .idea/
 src/__pycache__/
 messages/__pycache__/
+plugins/__pycache__/
