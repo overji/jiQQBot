@@ -58,7 +58,7 @@ class MyClient(botpy.Client):
             return self.llm.send_message(message)
 
     def simple_command(self,args):
-        parse_command(args)
+        return(parse_command(args))
 
     async def on_group_at_message_create(self, message: GroupMessage):
         _log.info(f"消息在{message.group_openid}")
