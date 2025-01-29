@@ -53,7 +53,7 @@ def interface_roll_dice(args):
             is_statistic = True
             args = args[:-1]
         if(len(args) == 0):
-            ans_list = uni_dice(start, end)
+            return f"掷骰子的结果是{random.randint(1,6)}"
         elif(len(args) == 2):
             start = int(args[0])
             end = int(args[1])
@@ -87,6 +87,12 @@ def interface_roll_dice(args):
     except:
         return f"错误的掷骰子!\n{interface_roll_dice_introduction(args)}"
     return generate_final_information(ans_list,is_statistic)
+
+def interface_get_introduction():
+    return interface_roll_dice_introduction([])
+
+def interface_get_name():
+    return "掷骰子"
 
 if __name__ == '__main__':
     print(interface_roll_dice([]))

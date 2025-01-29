@@ -12,14 +12,7 @@ from botpy import logging, BotAPI
 from botpy.ext.cog_yaml import read
 from botpy.message import GroupMessage, Message
 from .jiLLM import jiLLM
-
-from plugins.dangerous_three_characters import interface_three_characters
-from plugins.report_time import interface_report_time
-from plugins.find_bangdream_card import interface_find_bangdream_card
-from plugins.random_bangdream_emoji import interface_random_bangdream_emoji
-from plugins.random_galgame_emoji import  interface_random_galgame_emoji
-from plugins.roll_dice import interface_roll_dice
-from plugins.famous_sentence import interface_famous_sentence
+from plugins.PLUGIN_LOADER import parse_command
 
 config_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "secret", "config.yaml"))
 test_config = read(config_path)
@@ -65,15 +58,7 @@ class MyClient(botpy.Client):
             return self.llm.send_message(message)
 
     def simple_command(self,args):
-        cmd = args[0]
-        cmd_list = ["邦多利查卡","邦多利","旮旯给木","掷骰子","小锦一言","三字经"]
-        cmd_target = [interface_find_bangdream_card, interface_random_bangdream_emoji, interface_random_galgame_emoji, interface_roll_dice, interface_famous_sentence, interface_three_characters]
-        cmd_introduce = ["展示一张邦多利卡片","随机发送邦邦表情包","随机发送旮旯给木表情包","掷一个骰子(随机从1到6)","说一句名言","神秘功能"]
-        for i in range(0,len(cmd_list)):
-            if(cmd_list[i] == cmd):
-                _log.info(f"{cmd}被找到")
-                return cmd_target[i](args[1:])
-        return "找不到指令，请输入.help获取帮助"
+        parse_command(args)
 
     async def on_group_at_message_create(self, message: GroupMessage):
         _log.info(f"消息在{message.group_openid}")

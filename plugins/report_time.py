@@ -21,3 +21,9 @@ def interface_report_time(args):
 
     nowTime += datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return nowTime
+
+def interface_get_introduction():
+    return "报时功能，返回当前时间"
+
+def interface_get_name():
+    return "报时"

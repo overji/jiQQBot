@@ -116,7 +116,7 @@ class three_characters:
             ans.append(choices)
         return ans
 
-def interface_three_characters(args)->str:
+def interface_dangerous_three_characters(args)->str:
     tw = three_characters()
     ans = ""
     word_list = tw.get_specific_word_fast_head(args[0])
@@ -127,6 +127,12 @@ def interface_three_characters(args)->str:
     else:
         return "请正确输入！三字经要求2~3个字！"
     return ans
+
+def interface_get_introduction():
+    return "生成三字经"
+
+def interface_get_name():
+    return "三字经"
 
 if __name__ == '__main__':
     tw = three_characters()

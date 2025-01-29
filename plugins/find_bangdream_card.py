@@ -13,3 +13,9 @@ def interface_find_bangdream_card(args):
         else:
             return "邦多利查卡功能介绍\n使用方法: /邦多利查卡 [卡面ID]\n示例: /邦多利查卡 1582\n请确保卡面ID是一个整数，并且这个数字应当大于0并小于2641，否则会返回本消息"
     return file_url
+
+def interface_get_introduction():
+    return "展示一张邦多利卡片"
+
+def interface_get_name():
+    return "邦多利查卡"

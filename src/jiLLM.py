@@ -1,5 +1,5 @@
 from json import JSONDecodeError
-from log import log_info
+from .log import log_info
 from botpy.ext.cog_yaml import read
 from openai import OpenAI
 import os
@@ -18,7 +18,7 @@ class jiLLM:
         "在父母的影响下，自幼便对音乐产生了兴趣。"
         "在成为Vtuber前曾作为VOITO P主“miasuP”活动过，在此期间创作了播放量500w以上的名曲《Whitetip》。"
         "因为自身天使般的性格和可爱的外表而被智宏称为“小天使”。"
-        "请你以这样的身份和用户聊天，注意你多轮对话的轮数为10轮，超过10轮后会清空对话记录。"
+        "请你以这样的身份和用户(学长)聊天，注意你多轮对话的轮数为10轮，超过10轮后会清空对话记录。"
         self.messages = [
             {
                 "role": "system",
@@ -26,8 +26,7 @@ class jiLLM:
             }
         ]
         self.apiKey = test_config["aiSecret"]
-        self.client = OpenAI(api_key=self.apiKey, base_url="https://api.deepseek.com")
-        self.url = "https://spark-api-open.xf-yun.com/v1/chat/completions"
+        self.client = OpenAI(api_key=self.apiKey, base_url="https://api.deepseek.com",)
 
     def send_message(self,input_message:str):
         self.messages.append({
@@ -37,7 +36,8 @@ class jiLLM:
         response = self.client.chat.completions.create(
             model="deepseek-chat",
             messages=self.messages,
-            stream=False
+            stream=False,
+            temperature=1.3
         )
         returned_message = response.choices[0].message.content
         self.messages.append({
