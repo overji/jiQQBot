@@ -63,25 +63,32 @@ class MyClient(botpy.Client):
     async def on_group_at_message_create(self, message: GroupMessage):
         _log.info(f"消息在{message.group_openid}")
         myInfo = self.judge_special_message(message.content)
-        if re.search("^http",myInfo):
-            uploadMedia = await message._api.post_group_file(
-                group_openid=message.group_openid,
-                file_type=1,
-                url = myInfo
-            )
-            await message._api.post_group_message(
-                group_openid=message.group_openid,
-                msg_type = 7,
-                msg_id = message.id,
-                media = uploadMedia,
-                content=""
-            )
-        else:
+        if isinstance(myInfo,str):
             messageResult = await message._api.post_group_message(
                 group_openid=message.group_openid,
                   msg_type=0,
                   msg_id=message.id,
                   content=myInfo)
+        elif isinstance(myInfo,list):
+            i = 0
+            while(i < len(myInfo)):
+                intro = myInfo[i]
+                url = myInfo[i + 1]
+                seq = i//2 + 1
+                uploadMedia = await message._api.post_group_file(
+                    group_openid=message.group_openid,
+                    file_type=1,
+                    url=url
+                )
+                await message._api.post_group_message(
+                    group_openid=message.group_openid,
+                    msg_type=7,
+                    msg_id=message.id,
+                    media=uploadMedia,
+                    content=intro,
+                    msg_seq=seq
+                )
+                i += 2
 
     async def on_group_add_robot(self,event:GroupManageEvent):
         _log.info("机器人被添加到群聊：" + str(event))
